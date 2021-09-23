@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Арина Гердасова](https://up.htmlacademy.ru/javascript/24/user/1654299).
-* Наставник: `Неизвестно`.
+* Наставник: `Антон Попов` (https://htmlacademy.ru/profile/joker).
 
 ---
 
