@@ -69,4 +69,6 @@ const generatePost = () => {
   };
 };
 
-export {generatePost};
+const generatePosts = (count) => [...Array(count)].map(generatePost);
+
+export {generatePosts};
