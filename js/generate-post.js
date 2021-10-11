@@ -1,4 +1,4 @@
-import {getRandomPositiveInteger} from './utils/get-random-positive-integer';
+import {getRandomPositiveInteger} from './mock/get-random-positive-integer';
 
 const MESSAGE_COMMENT = [
   'Всё отлично!',
