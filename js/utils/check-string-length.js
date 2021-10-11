@@ -2,4 +2,6 @@ function checkStringLength (string, length) {
   return string.length <= length;
 }
 
-checkStringLength('dfvgbh fvgbhnj', 140);
+checkStringLength('Добро пожаловать в Звенигород', 140);
+
+export {checkStringLength};
