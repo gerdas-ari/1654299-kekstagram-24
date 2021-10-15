@@ -1,4 +1,4 @@
-import {getRandomPositiveInteger} from './mock/get-random-positive-integer';
+import {getRandomPositiveInteger} from './get-random-positive-integer';
 
 const MESSAGE_COMMENT = [
   'Всё отлично!',
@@ -69,6 +69,7 @@ const generatePost = () => {
   };
 };
 
+const generateComments = (count) => [...Array(count)].map(generateComment);
 const generatePosts = (count) => [...Array(count)].map(generatePost);
 
-export {generatePosts};
+export {generatePosts, generateComments};
