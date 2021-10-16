@@ -1,4 +1,4 @@
-import {getRandomPositiveInteger} from './get-random-positive-integer';
+import {getRandomPositiveInteger} from './get-random-positive-integer.js';
 
 const MESSAGE_COMMENT = [
   'Всё отлично!',
