@@ -1,4 +1,4 @@
-import {getRandomPositiveInteger} from './mock/get-random-positive-integer';
+import {getRandomPositiveInteger} from './get-random-positive-integer.js';
 
 const MESSAGE_COMMENT = [
   'Всё отлично!',
@@ -35,12 +35,13 @@ const DESCRIPTION_POST = [
   'Описание 10',
 ];
 
-const getRandomMessageComment = _.sampleSize(MESSAGE_COMMENT, 2);
+const getShuffledMessageComment = MESSAGE_COMMENT.sort(() => 0.5 - Math.random());
 
-const getRandomNameComment = _.sample(NAME_COMMENT);
+const getRandomMessageComment = getShuffledMessageComment.slice(0, 2);
 
-const getRandomDescriptionPost = _.sample(DESCRIPTION_POST);
+const getRandomNameComment = NAME_COMMENT[Math.floor(Math.random()*NAME_COMMENT.length)];
 
+const getRandomDescriptionPost = DESCRIPTION_POST[Math.floor(Math.random()*DESCRIPTION_POST.length)];
 
 /**
  * генерация объекта комментария
@@ -50,8 +51,8 @@ const generateComment = () => {
   return {
     id: getRandomPositiveInteger(1, 1000),
     avatar: `img/avatar-${getRandomPositiveInteger(1, 6)}.svg`,
-    message: getRandomMessageComment(),
-    name: getRandomNameComment(),
+    message: getRandomMessageComment,
+    name: getRandomNameComment,
   };
 };
 
@@ -63,7 +64,7 @@ const generatePost = () => {
   return {
     id: getRandomPositiveInteger(1, 25),
     url: `photos/${getRandomPositiveInteger(1, 25)}.jpg`,
-    description: getRandomDescriptionPost(),
+    description: getRandomDescriptionPost,
     likes: getRandomPositiveInteger(15, 200),
     comments: generateComment(),
   };
