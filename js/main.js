@@ -1,7 +1,7 @@
 import {generatePosts} from './mock/generate-post.js';
 import {renderMiniatures} from './miniatures.js';
 
-const POSTS_COUNT = 15;
+const POSTS_COUNT = 19;
 const postsData = generatePosts(POSTS_COUNT);
 
-const miniatureData = renderMiniatures(POSTS_COUNT);
+renderMiniatures(postsData);
