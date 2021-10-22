@@ -1,7 +1,7 @@
 const MAX_COMMENT_LENGTH = 140;
 const HASHTAG_COUNT = 5;
 const HASHTAG_LENGTH = 20;
-const hashtagValid = new RegExp('[^a-zA-Z-Яа-яЁё0-9]+');
+const hashtagValid = /^#[A-Za-zА-Яа-яЁё0-9]*$|(^$)/;
 
 const hashtagInput = document.querySelector('.text__hashtags');
 const commentTextarea = document.querySelector('.text__description');
