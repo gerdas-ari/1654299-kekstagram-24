@@ -682,6 +682,13 @@ main {
 
   border-radius: 5px;
 }
+.text__hashtags--invalid {
+  border: 2px solid red;
+}
+
+.text__hashtags--valid {
+  border: 2px solid greenyellow;
+}
 
 .text__description {
   width: 450px;
@@ -696,7 +703,6 @@ main {
 
   border-radius: 5px;
 }
-
 
 /**
  * Кнопка для отправки изображения

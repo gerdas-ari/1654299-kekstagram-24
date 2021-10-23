@@ -47,28 +47,24 @@ const getRandomDescriptionPost = DESCRIPTION_POST[Math.floor(Math.random()*DESCR
  * генерация объекта комментария
  * @returns {object} - сгенерированный объект комментария
  */
-const generateComment = () => {
-  return {
-    id: getRandomPositiveInteger(1, 1000),
-    avatar: `img/avatar-${getRandomPositiveInteger(1, 6)}.svg`,
-    message: getRandomMessageComment,
-    name: getRandomNameComment,
-  };
-};
+const generateComment = () => ({
+  id: getRandomPositiveInteger(1, 1000),
+  avatar: `img/avatar-${getRandomPositiveInteger(1, 6)}.svg`,
+  message: getRandomMessageComment,
+  name: getRandomNameComment,
+});
 
 /**
  * генерация объекта поста
  * @returns {object} - сгенерированный объект поста
  */
-const generatePost = () => {
-  return {
-    id: getRandomPositiveInteger(1, 25),
-    url: `photos/${getRandomPositiveInteger(1, 25)}.jpg`,
-    description: getRandomDescriptionPost,
-    likes: getRandomPositiveInteger(15, 200),
-    comments: generateComment(),
-  };
-};
+const generatePost = () => ({
+  id: getRandomPositiveInteger(1, 25),
+  url: `photos/${getRandomPositiveInteger(1, 25)}.jpg`,
+  description: getRandomDescriptionPost,
+  likes: getRandomPositiveInteger(15, 200),
+  comments: generateComment(),
+});
 
 const generatePosts = (count) => [...Array(count)].map(generatePost);
 
