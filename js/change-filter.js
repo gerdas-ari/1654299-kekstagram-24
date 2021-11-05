@@ -16,7 +16,7 @@ noUiSlider.create(rangeSlider, {
 
 const sliderChange = () => {
   effectsButtons.addEventListener('change', (evt) => {
-    imgPreview.className = '';
+    // imgPreview.className = '';
     imgPreview.style.filter = '';
     if (evt.target.matches('#effect-none')) {
       effectLevelScale.style.display = 'none';
