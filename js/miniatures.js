@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import {isEscapeKey} from './mock/press-escape-button.js';
 
 const miniaturesTemplateFragment = document.querySelector('#picture').content;
@@ -23,7 +24,8 @@ const renderMiniatures = (miniaturesData) => {
       fullPhotoTemplate.querySelector('.likes-count').textContent = likes;
       fullPhotoTemplate.querySelector('.comments-count').textContent = comments.length;
       fullPhotoTemplate.querySelector('.social__caption').textContent = description;
-      fullPhotoTemplate.querySelector('.social__comment-count').classList.add('hidden');
+      fullPhotoTemplate.querySelector('.social__comment-count').classList.remove('hidden');
+      fullPhotoTemplate.querySelector('.comments-loader').classList.remove('hidden');
       document.body.classList.add('modal-open');
       document.addEventListener('keydown', onFullPicEscKeydown);
     });
