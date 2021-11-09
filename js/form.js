@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import {isEscapeKey} from './mock/press-escape-button.js';
+import {isEscapeKey} from './utils.js';
 import {hashtagInput, commentTextarea} from './form-validation.js';
 import {effectLevelScale, imgPreview} from './change-filter.js';
 import { showAlert } from './utils.js';

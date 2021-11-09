@@ -21,4 +21,14 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export {showAlert};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+const getRandomPositiveInteger = (minNumber, maxNumber) => {
+  const lower = Math.ceil(Math.min(Math.abs(minNumber), Math.abs(maxNumber)));
+  const upper = Math.floor(Math.max(Math.abs(minNumber), Math.abs(maxNumber)));
+
+  const result = Math.random() * (upper - lower + 1) + lower;
+  return Math.floor(result);
+};
+
+export {showAlert, isEscapeKey, getRandomPositiveInteger};

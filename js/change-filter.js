@@ -102,15 +102,3 @@ rangeSlider.noUiSlider.on('update', (values, handle) => {
 
 sliderChange();
 export {effectLevelScale, imgPreview};
-
-// const filters = {
-//   chrome: {
-//     min:
-//     max:
-//     name:
-//     measurment:
-//   }
-// }
-// const currentFilter = ...
-
-// el.style = `filter: ${filters[currentFilter].name}()`;

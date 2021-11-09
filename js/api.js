@@ -1,15 +1,3 @@
-// const getServerData = (miniaturesData) => fetch('https://24.javascript.pages.academy/kekstagram/data')
-//   .then((response) => {
-//     if (response.ok) {
-//       return response;
-//     }
-//     throw new Error(showAlert('Не удалось загрузить данные с сервера'));
-//   })
-//   .then((response) => response.json())
-//   .then((data) => {
-//     miniaturesData(data);
-//   });
-
 const getServerData = (onSuccess) => {
   fetch('https://24.javascript.pages.academy/kekstagram/data')
     .then((response) => response.json())
@@ -20,7 +8,7 @@ const getServerData = (onSuccess) => {
 
 const sendData = (onSuccess, onFail, body) => {
   fetch(
-    'https://24.javascript.pages.academy/kekstagram',
+    'https://24.javascript.pages.academy/kekstagram/data',
     {
       method: 'POST',
       body,
