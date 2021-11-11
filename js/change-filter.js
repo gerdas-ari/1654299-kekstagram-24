@@ -16,7 +16,8 @@ noUiSlider.create(rangeSlider, {
 
 const sliderChange = () => {
   effectsButtons.addEventListener('change', (evt) => {
-    // imgPreview.className = '';
+    imgPreview.className = '';
+    imgPreview.classList.add('img-upload__preview');
     imgPreview.style.filter = '';
     if (evt.target.matches('#effect-none')) {
       effectLevelScale.style.display = 'none';
@@ -101,15 +102,3 @@ rangeSlider.noUiSlider.on('update', (values, handle) => {
 
 sliderChange();
 export {effectLevelScale, imgPreview};
-
-// const filters = {
-//   chrome: {
-//     min:
-//     max:
-//     name:
-//     measurment:
-//   }
-// }
-// const currentFilter = ...
-
-// el.style = `filter: ${filters[currentFilter].name}()`;

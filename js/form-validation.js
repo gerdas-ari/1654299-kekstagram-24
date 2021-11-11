@@ -6,6 +6,7 @@ const hashtagValid = /^#[A-Za-zА-Яа-яЁё0-9]*$|(^$)/;
 const hashtagInput = document.querySelector('.text__hashtags');
 const commentTextarea = document.querySelector('.text__description');
 
+
 const checkCommentValid = () => {
   commentTextarea.addEventListener('input', () => {
     const commentValueLength = commentTextarea.value.length;

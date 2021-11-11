@@ -1,6 +1,9 @@
-import {isEscapeKey} from './mock/press-escape-button.js';
+/* eslint-disable no-use-before-define */
+import {isEscapeKey} from './utils.js';
 import {hashtagInput, commentTextarea} from './form-validation.js';
 import {effectLevelScale, imgPreview} from './change-filter.js';
+import { showAlert } from './utils.js';
+import { sendData } from './api.js';
 
 const form = document.querySelector('.img-upload__form');
 const bodyVisible = document.querySelector('body');
@@ -44,3 +47,17 @@ uploadFileElement.addEventListener('change', (evt) => {
 imageEditFormClose.addEventListener('click', () => {
   closeEditForm();
 });
+
+const setUserFormSubmit = (onSuccess) => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    sendData(
+      () => onSuccess(),
+      () => showAlert('Не удалось отправить форму. Попробуйте ещё раз'),
+      new FormData(evt.target),
+    );
+  });
+};
+
+export {setUserFormSubmit};
