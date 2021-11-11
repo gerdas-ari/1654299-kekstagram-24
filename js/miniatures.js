@@ -12,14 +12,16 @@ const commentLoader = fullPhotoTemplate.querySelector('.comments-loader');
 const fullPhotoCommentsCountCurrent = document.querySelector('.comments-count--current');
 const fullPhotoCommentsCountAll = fullPhotoTemplate.querySelector('.comments-count');
 
+const SHOWN_COMMENTS = 5;
+
 const renderComments = (comments) => {
   commentsContainer.innerHTML = '';
 
-  commentLoader.addEventListener('click', () => {
-    const partComments = comments.splice(0, 5);
+  const onShowingComments = () => {
+    const partComments = comments.splice(0, SHOWN_COMMENTS);
     fullPhotoCommentsCountCurrent.textContent = fullPhotoCommentsCountAll.textContent - comments.length;
     if (fullPhotoCommentsCountCurrent.textContent === fullPhotoCommentsCountAll.textContent) {
-      commentLoader.classList.add('hidden');
+      commentLoader.remove();
     }
 
     partComments.forEach((comment) => {
@@ -29,7 +31,9 @@ const renderComments = (comments) => {
       commentTemplate.querySelector('.social__picture').alt = comment.name;
       commentsContainer.appendChild(newComment);
     });
-  });
+  };
+  onShowingComments();
+  commentLoader.addEventListener('click', onShowingComments);
 };
 
 const renderMiniatures = (miniaturesData) => {
@@ -57,23 +61,26 @@ const renderMiniatures = (miniaturesData) => {
   });
 
   miniaturesPictures.appendChild(miniaturesFragment);
-};
 
-const onFullPicEscKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
+  const onFullPicEscKeydown = (evt) => {
+    if (isEscapeKey(evt)) {
+      evt.preventDefault();
+      closedFullPic();
+    }
+  };
+
+  const closedFullPic = () => {
+    document.removeEventListener('keydown', onFullPicEscKeydown);
+    fullPhotoTemplate.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+    commentLoader.remove();
+  };
+
+  closeFullPic.addEventListener('click', () => {
     closedFullPic();
-  }
+  });
+
 };
 
-const closedFullPic = () => {
-  document.removeEventListener('keydown', onFullPicEscKeydown);
-  fullPhotoTemplate.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-};
-
-closeFullPic.addEventListener('click', () => {
-  closedFullPic();
-});
 
 export {renderMiniatures};
