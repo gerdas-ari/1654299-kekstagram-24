@@ -9,15 +9,16 @@ const closeFullPic = document.querySelector('.big-picture__cancel');
 const commentTemplate = fullPhotoTemplate.querySelector('.social__comment');
 const commentsContainer = fullPhotoTemplate.querySelector('.social__comments');
 const commentLoader = fullPhotoTemplate.querySelector('.comments-loader');
-// const fullPhotoCommentsCountCurrent = document.querySelector('.comments-count--current');
-// const fullPhotoCommentsCountBlock = fullPhotoTemplate.querySelector('.social__comment-count');
+const fullPhotoCommentsCountCurrent = document.querySelector('.comments-count--current');
+const fullPhotoCommentsCountAll = fullPhotoTemplate.querySelector('.comments-count');
 
 const renderComments = (comments) => {
   commentsContainer.innerHTML = '';
 
   commentLoader.addEventListener('click', () => {
     const partComments = comments.splice(0, 5);
-    if (comments.length <= 5) {
+    fullPhotoCommentsCountCurrent.textContent = fullPhotoCommentsCountAll.textContent - comments.length;
+    if (fullPhotoCommentsCountCurrent.textContent === fullPhotoCommentsCountAll.textContent) {
       commentLoader.classList.add('hidden');
     }
 
@@ -56,23 +57,23 @@ const renderMiniatures = (miniaturesData) => {
   });
 
   miniaturesPictures.appendChild(miniaturesFragment);
-
-  const onFullPicEscKeydown = (evt) => {
-    if (isEscapeKey(evt)) {
-      evt.preventDefault();
-      closedFullPic();
-    }
-  };
-
-  const closedFullPic = () => {
-    document.removeEventListener('keydown', onFullPicEscKeydown);
-    fullPhotoTemplate.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-  };
-
-  closeFullPic.addEventListener('click', () => {
-    closedFullPic();
-  });
 };
+
+const onFullPicEscKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closedFullPic();
+  }
+};
+
+const closedFullPic = () => {
+  document.removeEventListener('keydown', onFullPicEscKeydown);
+  fullPhotoTemplate.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+};
+
+closeFullPic.addEventListener('click', () => {
+  closedFullPic();
+});
 
 export {renderMiniatures};
