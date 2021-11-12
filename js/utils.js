@@ -1,5 +1,7 @@
 const ALERT_SHOW_TIME = 5000;
 
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = 100;
@@ -31,4 +33,4 @@ const getRandomPositiveInteger = (minNumber, maxNumber) => {
   return Math.floor(result);
 };
 
-export {showAlert, isEscapeKey, getRandomPositiveInteger};
+export {showAlert, isEscapeKey, getRandomPositiveInteger, FILE_TYPES};

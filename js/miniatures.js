@@ -21,7 +21,7 @@ const renderComments = (comments) => {
     const partComments = comments.splice(0, SHOWN_COMMENTS);
     fullPhotoCommentsCountCurrent.textContent = fullPhotoCommentsCountAll.textContent - comments.length;
     if (fullPhotoCommentsCountCurrent.textContent === fullPhotoCommentsCountAll.textContent) {
-      commentLoader.remove();
+      commentLoader.classList.add('hidden');
     }
 
     partComments.forEach((comment) => {
@@ -60,7 +60,18 @@ const renderMiniatures = (miniaturesData) => {
     });
   });
 
-  miniaturesPictures.appendChild(miniaturesFragment);
+  const closedFullPic = () => {
+    commentsContainer.innerHTML = '';
+    fullPhotoTemplate.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+    commentLoader.remove();
+    fullPhotoCommentsCountCurrent.textContent = SHOWN_COMMENTS;
+    document.removeEventListener('keydown', onFullPicEscKeydown);
+  };
+
+  closeFullPic.addEventListener('click', () => {
+    closedFullPic();
+  });
 
   const onFullPicEscKeydown = (evt) => {
     if (isEscapeKey(evt)) {
@@ -69,18 +80,7 @@ const renderMiniatures = (miniaturesData) => {
     }
   };
 
-  const closedFullPic = () => {
-    document.removeEventListener('keydown', onFullPicEscKeydown);
-    fullPhotoTemplate.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-    commentLoader.remove();
-  };
-
-  closeFullPic.addEventListener('click', () => {
-    closedFullPic();
-  });
-
+  miniaturesPictures.appendChild(miniaturesFragment);
 };
-
 
 export {renderMiniatures};
