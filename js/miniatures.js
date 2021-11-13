@@ -11,6 +11,7 @@ const commentsContainer = fullPhotoTemplate.querySelector('.social__comments');
 const commentLoader = fullPhotoTemplate.querySelector('.comments-loader');
 const fullPhotoCommentsCountCurrent = document.querySelector('.comments-count--current');
 const fullPhotoCommentsCountAll = fullPhotoTemplate.querySelector('.comments-count');
+const filtersBlock = document.querySelector('.img-filters');
 
 const SHOWN_COMMENTS = 5;
 
@@ -81,6 +82,7 @@ const renderMiniatures = (miniaturesData) => {
   };
 
   miniaturesPictures.appendChild(miniaturesFragment);
+  filtersBlock.classList.remove('img-filters--inactive');
 };
 
 export {renderMiniatures};
