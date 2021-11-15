@@ -1,5 +1,18 @@
 const ALERT_SHOW_TIME = 5000;
 
+const ESCAPE_CODE = 'Escape';
+
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+
+const debounce = (func, delay) => {
+  let timeout;
+  return (...args) => {
+    const callFunc = () => func.apply(this, args);
+    clearTimeout(timeout);
+    timeout = setTimeout(callFunc, delay);
+  };
+};
+
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = 100;
@@ -31,4 +44,4 @@ const getRandomPositiveInteger = (minNumber, maxNumber) => {
   return Math.floor(result);
 };
 
-export {showAlert, isEscapeKey, getRandomPositiveInteger};
+export {showAlert, isEscapeKey, getRandomPositiveInteger, FILE_TYPES, debounce, ESCAPE_CODE};

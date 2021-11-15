@@ -1,12 +1,16 @@
 const getServerData = (onSuccess) => {
-  fetch('https://24.javascript.pages.academy/kekstagram/data')
+  fetch('https://24.javascript.pages.academy/kekstagram/data',
+    {
+      method: 'GET',
+    },
+  )
     .then((response) => response.json())
     .then((data) => {
       onSuccess(data);
     });
 };
 
-const sendData = (onSuccess, onFail, body) => {
+const sendData = (onSuccess, onFail, body, closeForm) => {
   fetch(
     'https://24.javascript.pages.academy/kekstagram/',
     {
@@ -18,12 +22,13 @@ const sendData = (onSuccess, onFail, body) => {
       if (response.ok) {
         onSuccess();
       } else {
-        onFail('Не удалось отправить форму. Попробуйте ещё раз');
+        onFail();
       }
     })
     .catch(() => {
-      onFail('Не удалось отправить форму. Попробуйте ещё раз');
-    });
+      onFail();
+    })
+    .finally((closeForm()));
 };
 
 export {getServerData, sendData};
