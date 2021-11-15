@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import { isEscapeKey } from './utils.js';
+import {isEscapeKey} from './utils.js';
 
 const miniaturesTemplateFragment = document.querySelector('#picture').content;
 const miniaturesTemplate = miniaturesTemplateFragment.querySelector('.picture');
@@ -14,30 +14,39 @@ const fullPhotoCommentsCountAll = fullPhotoTemplate.querySelector('.comments-cou
 const filtersBlock = document.querySelector('.img-filters');
 
 const SHOWN_COMMENTS = 5;
+let commentsRendered = 0;
 
-const renderComments = (comments) => {
-  commentsContainer.innerHTML = '';
+const showComments = (comments) => {
+  const partComments = comments.slice(commentsRendered, commentsRendered + SHOWN_COMMENTS);
+  commentsRendered += partComments.length;
+  fullPhotoCommentsCountCurrent.textContent = commentsRendered;
+  if (fullPhotoCommentsCountCurrent.textContent === fullPhotoCommentsCountAll.textContent) {
+    commentLoader.classList.add('hidden');
+  }
 
-  const onShowingComments = () => {
-    const partComments = comments.splice(0, SHOWN_COMMENTS);
-    fullPhotoCommentsCountCurrent.textContent = fullPhotoCommentsCountAll.textContent - comments.length;
-    if (fullPhotoCommentsCountCurrent.textContent === fullPhotoCommentsCountAll.textContent) {
-      commentLoader.classList.add('hidden');
-    }
-
-    partComments.forEach((comment) => {
-      const newComment = commentTemplate.cloneNode(true);
-      commentTemplate.querySelector('.social__text').textContent = comment.message;
-      commentTemplate.querySelector('.social__picture').src = comment.avatar;
-      commentTemplate.querySelector('.social__picture').alt = comment.name;
-      commentsContainer.appendChild(newComment);
-    });
-  };
-  onShowingComments();
-  commentLoader.addEventListener('click', onShowingComments);
+  partComments.forEach((comment) => {
+    const newComment = commentTemplate.cloneNode(true);
+    commentTemplate.querySelector('.social__text').textContent = comment.message;
+    commentTemplate.querySelector('.social__picture').src = comment.avatar;
+    commentTemplate.querySelector('.social__picture').alt = comment.name;
+    commentsContainer.appendChild(newComment);
+  });
 };
 
+
+const renderComments = (comments, handler) => {
+  commentsContainer.innerHTML = '';
+  showComments(comments);
+
+  commentLoader.addEventListener('click', handler);
+};
+
+const activeListeners = new Set();
+
 const renderMiniatures = (miniaturesData) => {
+  miniaturesPictures.querySelectorAll('.picture').forEach((pic) => {
+    pic.remove();
+  });
   const miniaturesFragment = document.createDocumentFragment();
 
   miniaturesData.forEach (({url, likes, comments, description}) => {
@@ -46,6 +55,11 @@ const renderMiniatures = (miniaturesData) => {
     miniatureElement.querySelector('.picture__comments').textContent = comments.length;
     miniatureElement.querySelector('.picture__likes').textContent = likes;
     miniaturesFragment.appendChild(miniatureElement);
+
+    const onShowMore = () => {
+      showComments(comments);
+    };
+
 
     miniatureElement.addEventListener('click', () => {
       fullPhotoTemplate.classList.remove('hidden');
@@ -57,7 +71,13 @@ const renderMiniatures = (miniaturesData) => {
       fullPhotoTemplate.querySelector('.social__comment-count').classList.remove('hidden');
       document.body.classList.add('modal-open');
       document.addEventListener('keydown', onFullPicEscKeydown);
-      renderComments(comments);
+
+      activeListeners.add(onShowMore);
+
+      activeListeners.forEach((listener) => {
+        commentLoader.removeEventListener('click', listener);
+      });
+      renderComments(comments, onShowMore);
     });
   });
 
@@ -65,9 +85,9 @@ const renderMiniatures = (miniaturesData) => {
     commentsContainer.innerHTML = '';
     fullPhotoTemplate.classList.add('hidden');
     document.body.classList.remove('modal-open');
-    commentLoader.remove();
-    fullPhotoCommentsCountCurrent.textContent = SHOWN_COMMENTS;
+    commentLoader.classList.add('hidden');
     document.removeEventListener('keydown', onFullPicEscKeydown);
+    commentsRendered = 0;
   };
 
   closeFullPic.addEventListener('click', () => {

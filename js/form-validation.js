@@ -1,31 +1,19 @@
-// import { sendData } from './api.js';
-// import {closeEditForm} from './form.js';
-// import { ESCAPE_CODE } from './utils.js';
+import { sendData } from './api.js';
+import {closeEditForm} from './form.js';
+import { ESCAPE_CODE } from './utils.js';
 
-const MAX_COMMENT_LENGTH = 140;
+// const MAX_COMMENT_LENGTH = 140;
 const HASHTAG_COUNT = 5;
 const HASHTAG_LENGTH = 20;
 const hashtagValid = /^#[A-Za-zА-Яа-яЁё0-9]*$|(^$)/;
 
 const hashtagInput = document.querySelector('.text__hashtags');
 const commentTextarea = document.querySelector('.text__description');
-// const successSendBlock = document.querySelector('#success').content.querySelector('.success');
-// const errorSendBlock = document.querySelector('#error').content.querySelector('.error');
-// const successButton = successSendBlock.querySelector('.success__button');
-// const errorButton = errorSendBlock.querySelector('.error__button');
-// const body = document.querySelector('body');
-
-
-const checkCommentValid = () => {
-  commentTextarea.addEventListener('input', () => {
-    const commentValueLength = commentTextarea.value.length;
-
-    if (commentValueLength <= MAX_COMMENT_LENGTH) {
-      commentTextarea.setCustomValidity(`Ещё ${ MAX_COMMENT_LENGTH - commentValueLength } симв.`);
-    }
-    commentTextarea.reportValidity();
-  });
-};
+const successSendBlock = document.querySelector('#success').content.querySelector('.success');
+const errorSendBlock = document.querySelector('#error').content.querySelector('.error');
+const successButton = successSendBlock.querySelector('.success__button');
+const errorButton = errorSendBlock.querySelector('.error__button');
+const body = document.querySelector('body');
 
 const checkHashtagValid = () => {
   hashtagInput.addEventListener('input', () => {
@@ -82,45 +70,40 @@ const checkHashtagValid = () => {
   });
 };
 
-// //Функция закрытия окна ошибки отправки фото
-// const onErrorMessageEvent = (evt) => {
-//   if (evt.key !== ESCAPE_CODE && evt.target !== errorButton && evt.target.matches('.error__inner')) {
-//     return;
-//   }
-//   errorSendBlock.remove();
-//   errorButton.removeEventListener('click', onErrorMessageEvent);
-//   document.removeEventListener('keydown', onErrorMessageEvent);
-// };
+const onErrorMessageEvent = (evt) => {
+  if (evt.key !== ESCAPE_CODE && evt.target !== errorButton && evt.target.matches('.error__inner')) {
+    return;
+  }
+  errorSendBlock.remove();
+  errorButton.removeEventListener('click', onErrorMessageEvent);
+  document.removeEventListener('keydown', onErrorMessageEvent);
+};
 
-// //Функция закрытия окна успешной отправки фото
-// const onSuccessMessageEvent = (evt) => {
-//   if (evt.key !== ESCAPE_CODE && evt.target !== successButton && evt.target.matches('.success__inner')) {
-//     return;
-//   }
-//   successSendBlock.remove();
-//   successSendBlock.removeEventListener('click', onSuccessMessageEvent);
-//   document.removeEventListener('keydown', onSuccessMessageEvent);
-// };
+const onSuccessMessageEvent = (evt) => {
+  if (evt.key !== ESCAPE_CODE && evt.target !== successButton && evt.target.matches('.success__inner')) {
+    return;
+  }
+  successSendBlock.remove();
+  successSendBlock.removeEventListener('click', onSuccessMessageEvent);
+  document.removeEventListener('keydown', onSuccessMessageEvent);
+};
 
-// //Функция открытия окна ошибки отправки фото
-// const openErrorMessage = () => {
-//   body.append(errorSendBlock);
-//   errorButton.addEventListener('click', onErrorMessageEvent);
-//   document.addEventListener('keydown', onErrorMessageEvent);
-// };
-// //Функция открытия окна успешной отправки фото
-// const openSuccessMessage = () => {
-//   body.append(successSendBlock);
-//   successSendBlock.addEventListener('click', onSuccessMessageEvent);
-//   document.addEventListener('keydown', onSuccessMessageEvent);
-// };
+const openErrorMessage = () => {
+  body.append(errorSendBlock);
+  errorButton.addEventListener('click', onErrorMessageEvent);
+  document.addEventListener('keydown', onErrorMessageEvent);
+};
+const openSuccessMessage = () => {
+  body.append(successSendBlock);
+  successSendBlock.addEventListener('click', onSuccessMessageEvent);
+  document.addEventListener('keydown', onSuccessMessageEvent);
+};
 
-// //Отправка формы
-// const onFormSubmit = (evt) => {
-//   evt.preventDefault();
-//   commentTextarea.value = commentTextarea.value.replace(/\s+/g, ' ').trim();
-//   hashtagInput.value = hashtagInput.value.replace(/\s+/g, ' ').trim();
-//   sendData(openSuccessMessage, openErrorMessage, new FormData(evt.target), closeEditForm);
-// };
+const onFormSubmit = (evt) => {
+  evt.preventDefault();
+  commentTextarea.value = commentTextarea.value.replace(/\s+/g, ' ').trim();
+  hashtagInput.value = hashtagInput.value.replace(/\s+/g, ' ').trim();
+  sendData(openSuccessMessage, openErrorMessage, new FormData(evt.target), closeEditForm);
+};
 
-export {hashtagInput, commentTextarea, checkHashtagValid, checkCommentValid};
+export {hashtagInput, commentTextarea, checkHashtagValid, onFormSubmit};
