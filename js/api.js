@@ -1,5 +1,10 @@
 const getServerData = (onSuccess) => {
-  fetch('https://24.javascript.pages.academy/kekstagram/data')
+  fetch('https://24.javascript.pages.academy/kekstagram/data',
+    {
+      method: 'GET',
+      credintials: 'same-origin',
+    },
+  )
     .then((response) => response.json())
     .then((data) => {
       onSuccess(data);
@@ -11,6 +16,7 @@ const sendData = (onSuccess, onFail, body) => {
     'https://24.javascript.pages.academy/kekstagram/',
     {
       method: 'POST',
+      credentials: 'same-origin',
       body,
     },
   )

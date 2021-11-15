@@ -3,6 +3,7 @@ import { renderMiniatures } from './miniatures.js';
 
 const imgFiltersForm = document.querySelector('.img-filters__form');
 const imgFiltersButtons = document.querySelectorAll('.img-filters__button');
+const picturesContainer = document.querySelector('.pictures');
 const RANDOM_PHOTOS_COUNT = 10;
 const DELAY_TIME = 500;
 
@@ -21,6 +22,7 @@ const showDiscussedPhotos = (copyArray) => {
 
 
 const shufflePhotos = (array) => {
+
   let shuffleArray = [];
   const delayRendering = debounce(renderMiniatures, DELAY_TIME);
   imgFiltersForm.addEventListener('click', (evt) => {

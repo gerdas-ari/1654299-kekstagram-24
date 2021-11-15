@@ -1,5 +1,7 @@
 const ALERT_SHOW_TIME = 5000;
 
+const ESCAPE_CODE = 'Escape';
+
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
 const debounce = (func, delay) => {
@@ -42,4 +44,4 @@ const getRandomPositiveInteger = (minNumber, maxNumber) => {
   return Math.floor(result);
 };
 
-export {showAlert, isEscapeKey, getRandomPositiveInteger, FILE_TYPES, debounce};
+export {showAlert, isEscapeKey, getRandomPositiveInteger, FILE_TYPES, debounce, ESCAPE_CODE};

@@ -1,9 +1,8 @@
 /* eslint-disable no-use-before-define */
-import {isEscapeKey} from './utils.js';
+import {isEscapeKey, showAlert, FILE_TYPES} from './utils.js';
 import {hashtagInput, commentTextarea} from './form-validation.js';
-import {effectLevelScale, imgPreview} from './change-filter.js';
-import { showAlert, FILE_TYPES } from './utils.js';
-import { sendData } from './api.js';
+import {effectLevelScale} from './change-filter.js';
+import {sendData} from './api.js';
 
 const form = document.querySelector('.img-upload__form');
 const bodyVisible = document.querySelector('body');
@@ -12,6 +11,7 @@ const imageEditForm = document.querySelector('.img-upload__overlay');
 const imageEditFormClose = imageEditForm.querySelector('#upload-cancel');
 const photoLoaderModal = document.querySelector('#messages').content.querySelector('.img-upload__message');
 const minPhoto = document.querySelectorAll('.effects__preview');
+const imgUploadPreview = document.querySelector('.img-upload__preview img');
 
 const onEditFormEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -25,7 +25,7 @@ const openEditForm = () => {
   bodyVisible.classList.add('modal-open');
   effectLevelScale.style.display = 'none';
   imageEditFormClose.addEventListener('click', closeEditForm);
-
+  // form.addEventListener('submit', onFormSubmit);
   document.addEventListener('keydown', onEditFormEscKeydown);
 };
 
@@ -35,17 +35,13 @@ const closeEditForm = () => {
     bodyVisible.classList.remove('modal-open');
 
     document.removeEventListener('keydown', onEditFormEscKeydown);
+    // form.removeEventListener('submit', onFormSubmit);
     form.reset();
-    imgPreview.style.transform = '';
-    imgPreview.style.filter = '';
-    imgPreview.className = '';
+    imgUploadPreview.style.transform = '';
+    imgUploadPreview.style.filter = '';
+    imgUploadPreview.className = '';
   }
 };
-
-// uploadFileElement.addEventListener('change', (evt) => {
-//   openEditForm();
-//   evt.target.value = '';
-// });
 
 const setUserFormSubmit = (onSuccess) => {
   form.addEventListener('submit', (evt) => {
@@ -64,15 +60,15 @@ const setPreviewImage = (evt) => {
   const userPhotoUrl = URL.createObjectURL(userPhoto);
   const userPhotoName = userPhoto.name.toLowerCase();
   const matches = FILE_TYPES.some((item) => userPhotoName.endsWith(item));
-  imgPreview.addEventListener('load', () => {
+  imgUploadPreview.addEventListener('load', () => {
     photoLoaderModal.remove();
     openEditForm(),
     { once: true };
   });
   if (matches) {
     bodyVisible.append(photoLoaderModal);
-    imgPreview.src = userPhotoUrl;
-    minPhoto.forEach((element) => element.style.backgroundImage = `url(${imgPreview.src})`);
+    imgUploadPreview.src = userPhotoUrl;
+    minPhoto.forEach((element) => element.style.backgroundImage = `url(${imgUploadPreview.src})`);
   } else {
     showAlert('Неподдерживаемый формат изображения. Загрузите другое изображение');
   }
