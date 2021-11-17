@@ -14,16 +14,13 @@ noUiSlider.create(rangeSlider, {
   connect: 'lower',
 });
 
-const sliderChange = () => {
+const changeSlider = () => {
   effectsButtons.addEventListener('change', (evt) => {
     imgPreview.className = '';
     imgPreview.classList.add('img-upload__preview');
     imgPreview.style.filter = '';
-    if (evt.target.matches('#effect-none')) {
-      effectLevelScale.style.display = 'none';
-    } else {
-      effectLevelScale.style.display = '';
-    }
+    effectLevelScale.style.display = (evt.target.matches('#effect-none')) ? 'none' : '';
+
     if (evt.target.matches('#effect-chrome')) {
       imgPreview.classList.add('effects__preview--chrome');
       rangeSlider.noUiSlider.updateOptions({
@@ -100,5 +97,5 @@ rangeSlider.noUiSlider.on('update', (values, handle) => {
   }
 });
 
-sliderChange();
+changeSlider();
 export {effectLevelScale, imgPreview};

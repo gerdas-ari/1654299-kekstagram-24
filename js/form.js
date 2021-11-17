@@ -17,7 +17,7 @@ const imgUploadPreviewImg = document.querySelector('.img-upload__preview img');
 const onEditFormEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    closeEditForm();
+    onEditFormClose();
   }
 };
 
@@ -25,12 +25,12 @@ const openEditForm = () => {
   imageEditForm.classList.remove('hidden');
   bodyVisible.classList.add('modal-open');
   effectLevelScale.style.display = 'none';
-  imageEditFormClose.addEventListener('click', closeEditForm);
+  imageEditFormClose.addEventListener('click', onEditFormClose);
   form.addEventListener('submit', onFormSubmit);
   document.addEventListener('keydown', onEditFormEscKeydown);
 };
 
-const closeEditForm = () => {
+const onEditFormClose = () => {
   if (document.activeElement !== hashtagInput && document.activeElement !== commentTextarea ) {
     imageEditForm.classList.add('hidden');
     bodyVisible.classList.remove('modal-open');
@@ -44,7 +44,7 @@ const closeEditForm = () => {
   }
 };
 
-const setPreviewImage = (evt) => {
+const onSettingPreviewImage = (evt) => {
   const userPhoto = evt.target.files[0];
   const userPhotoUrl = URL.createObjectURL(userPhoto);
   const userPhotoName = userPhoto.name.toLowerCase();
@@ -64,7 +64,7 @@ const setPreviewImage = (evt) => {
   }
 };
 
-uploadFileElement.addEventListener('change', setPreviewImage);
+uploadFileElement.addEventListener('change', onSettingPreviewImage);
 
 
-export {closeEditForm};
+export {onEditFormClose};

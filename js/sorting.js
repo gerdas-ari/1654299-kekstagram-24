@@ -1,49 +1,51 @@
 import {getRandomPositiveInteger, debounce} from './utils.js';
 import { renderMiniatures } from './miniatures.js';
 
-const imgFiltersForm = document.querySelector('.img-filters__form');
-const imgFiltersButtons = document.querySelectorAll('.img-filters__button');
 const RANDOM_PHOTOS_COUNT = 10;
 const DELAY_TIME = 500;
 
-const showRandomPhotos = (copyArray) => {
-  for (let index = copyArray.length - 1; index > 0; index--) {
-    const randomIndex = getRandomPositiveInteger(0, copyArray.length - 1);
-    [copyArray[index], copyArray[randomIndex]] = [copyArray[randomIndex], copyArray[index]];
+
+const imgFiltersForm = document.querySelector('.img-filters__form');
+const imgFiltersButtons = document.querySelectorAll('.img-filters__button');
+
+const showRandomPhotos = (picturesArray) => {
+  for (let index = picturesArray.length - 1; index > 0; index--) {
+    const randomIndex = getRandomPositiveInteger(0, picturesArray.length - 1);
+    [picturesArray[index], picturesArray[randomIndex]] = [picturesArray[randomIndex], picturesArray[index]];
   }
-  return copyArray.slice(0,RANDOM_PHOTOS_COUNT);
+  return picturesArray.slice(0,RANDOM_PHOTOS_COUNT);
 };
 
-const showDiscussedPhotos = (copyArray) => {
-  copyArray.sort((commentA, commentB) => commentB.comments.length - commentA.comments.length);
-  return copyArray;
+const showDiscussedPhotos = (picturesArray) => {
+  picturesArray.sort((commentA, commentB) => commentB.comments.length - commentA.comments.length);
+  return picturesArray;
 };
 
 
-const shufflePhotos = (array) => {
+const shufflePhotos = (pictures) => {
 
-  let shuffleArray = [];
+  let shuffledPicturesArray = [];
   const delayRendering = debounce(renderMiniatures, DELAY_TIME);
   imgFiltersForm.addEventListener('click', (evt) => {
     evt.preventDefault();
 
     imgFiltersButtons.forEach((button) => button.classList.remove('img-filters__button--active'));
 
-    const copyArray = array.slice();
+    const picturesArray = pictures.slice();
 
     if (evt.target.matches('#filter-default')) {
-      shuffleArray = array;
+      shuffledPicturesArray = pictures;
       evt.target.classList.add('img-filters__button--active');
     }
     if (evt.target.matches('#filter-random')) {
-      shuffleArray = showRandomPhotos(copyArray);
+      shuffledPicturesArray = showRandomPhotos(picturesArray);
       evt.target.classList.add('img-filters__button--active');
     }
     if (evt.target.matches('#filter-discussed')) {
-      shuffleArray = showDiscussedPhotos(copyArray);
+      shuffledPicturesArray = showDiscussedPhotos(picturesArray);
       evt.target.classList.add('img-filters__button--active');
     }
-    delayRendering(shuffleArray);
+    delayRendering(shuffledPicturesArray);
   });
 };
 
