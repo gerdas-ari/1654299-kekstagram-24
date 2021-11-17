@@ -1,5 +1,5 @@
 import { sendData } from './api.js';
-import {closeEditForm} from './form.js';
+import {onEditFormClose} from './form.js';
 import { ESCAPE_CODE } from './utils.js';
 
 // const MAX_COMMENT_LENGTH = 140;
@@ -19,15 +19,15 @@ const checkHashtagValid = () => {
   hashtagInput.addEventListener('input', () => {
     hashtagInput.value = hashtagInput.value.toLowerCase().replace(/\s+/g, ' ');
 
-    const hashtagArray = hashtagInput.value.split(' ');
-    const errorArray = [];
+    const hashtags = hashtagInput.value.split(' ');
+    const errors = [];
 
     const hasDuplicates = () => {
       const counts = [];
 
-      for (let i = 0; i <= hashtagArray.length; i++) {
-        if (counts[hashtagArray[i]] === undefined) {
-          counts[hashtagArray[i]] = 1;
+      for (let i = 0; i <= hashtags.length; i++) {
+        if (counts[hashtags[i]] === undefined) {
+          counts[hashtags[i]] = 1;
         } else {
           return true;
         }
@@ -35,75 +35,75 @@ const checkHashtagValid = () => {
       return false;
     };
 
-    hashtagArray.forEach((tag) => {
+    hashtags.forEach((tag) => {
       if (!tag.startsWith('#')) {
-        errorArray.push('Хештеги должны начинаться с "#" и отделяться пробелом');
+        errors.push('Хештеги должны начинаться с "#" и отделяться пробелом');
       }
       if (tag === '') {
-        errorArray.length = 0;
+        errors.length = 0;
       }
       if (tag === '#') {
-        errorArray.push('Хештег не может состоять только из "#');
+        errors.push('Хештег не может состоять только из "#');
       }
       if (!hashtagValid.test(tag)) {
-        errorArray.push('Хештеги должны состоять только из букв и чисел');
+        errors.push('Хештеги должны состоять только из букв и чисел');
       }
       if (tag.length > HASHTAG_LENGTH) {
-        errorArray.push(`Хештег не может быть длиннее ${HASHTAG_LENGTH} символов`);
+        errors.push(`Хештег не может быть длиннее ${HASHTAG_LENGTH} символов`);
       }
-      if (hasDuplicates(hashtagArray) === true) {
-        errorArray.push('Хештеги не могут повторяться');
+      if (hasDuplicates(hashtags) === true) {
+        errors.push('Хештеги не могут повторяться');
       }
-      if (hashtagArray.length > HASHTAG_COUNT && hashtagArray[HASHTAG_COUNT] !== '') {
-        errorArray.push(`Нельзя добавлять более ${HASHTAG_COUNT} хештегов`);
+      if (hashtags.length > HASHTAG_COUNT && hashtags[HASHTAG_COUNT] !== '') {
+        errors.push(`Нельзя добавлять более ${HASHTAG_COUNT} хештегов`);
       }
     });
-    if (hashtagArray[0] === '') {
+    if (hashtags[0] === '') {
       hashtagInput.value = hashtagInput.value.trim();
       hashtagInput.setCustomValidity('');
-    } else if (errorArray.length === 0) {
+    } else if (errors.length === 0) {
       hashtagInput.setCustomValidity('');
     } else {
-      hashtagInput.setCustomValidity(errorArray[0]);
+      hashtagInput.setCustomValidity(errors[0]);
     }
     hashtagInput.reportValidity();
   });
 };
 
-const onErrorMessageEvent = (evt) => {
+const onErrorMessageSend = (evt) => {
   if (evt.key !== ESCAPE_CODE && evt.target !== errorButton && evt.target.matches('.error__inner')) {
     return;
   }
   errorSendBlock.remove();
-  errorButton.removeEventListener('click', onErrorMessageEvent);
-  document.removeEventListener('keydown', onErrorMessageEvent);
+  errorButton.removeEventListener('click', onErrorMessageSend);
+  document.removeEventListener('keydown', onErrorMessageSend);
 };
 
-const onSuccessMessageEvent = (evt) => {
+const onSuccessMessageSend = (evt) => {
   if (evt.key !== ESCAPE_CODE && evt.target !== successButton && evt.target.matches('.success__inner')) {
     return;
   }
   successSendBlock.remove();
-  successSendBlock.removeEventListener('click', onSuccessMessageEvent);
-  document.removeEventListener('keydown', onSuccessMessageEvent);
+  successSendBlock.removeEventListener('click', onSuccessMessageSend);
+  document.removeEventListener('keydown', onSuccessMessageSend);
 };
 
 const openErrorMessage = () => {
   body.append(errorSendBlock);
-  errorButton.addEventListener('click', onErrorMessageEvent);
-  document.addEventListener('keydown', onErrorMessageEvent);
+  errorButton.addEventListener('click', onErrorMessageSend);
+  document.addEventListener('keydown', onErrorMessageSend);
 };
 const openSuccessMessage = () => {
   body.append(successSendBlock);
-  successSendBlock.addEventListener('click', onSuccessMessageEvent);
-  document.addEventListener('keydown', onSuccessMessageEvent);
+  successSendBlock.addEventListener('click', onSuccessMessageSend);
+  document.addEventListener('keydown', onSuccessMessageSend);
 };
 
 const onFormSubmit = (evt) => {
   evt.preventDefault();
   commentTextarea.value = commentTextarea.value.replace(/\s+/g, ' ').trim();
   hashtagInput.value = hashtagInput.value.replace(/\s+/g, ' ').trim();
-  sendData(openSuccessMessage, openErrorMessage, new FormData(evt.target), closeEditForm);
+  sendData(openSuccessMessage, openErrorMessage, new FormData(evt.target), onEditFormClose);
 };
 
 export {hashtagInput, commentTextarea, checkHashtagValid, onFormSubmit};

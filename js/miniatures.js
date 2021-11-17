@@ -1,6 +1,9 @@
 /* eslint-disable no-use-before-define */
 import {isEscapeKey} from './utils.js';
 
+const SHOWN_COMMENTS = 5;
+let commentsRendered = 0;
+
 const miniaturesTemplateFragment = document.querySelector('#picture').content;
 const miniaturesTemplate = miniaturesTemplateFragment.querySelector('.picture');
 const miniaturesPictures = document.querySelector('.pictures');
@@ -12,9 +15,6 @@ const commentLoader = fullPhotoTemplate.querySelector('.comments-loader');
 const fullPhotoCommentsCountCurrent = document.querySelector('.comments-count--current');
 const fullPhotoCommentsCountAll = fullPhotoTemplate.querySelector('.comments-count');
 const filtersBlock = document.querySelector('.img-filters');
-
-const SHOWN_COMMENTS = 5;
-let commentsRendered = 0;
 
 const showComments = (comments) => {
   const partComments = comments.slice(commentsRendered, commentsRendered + SHOWN_COMMENTS);
@@ -34,11 +34,11 @@ const showComments = (comments) => {
 };
 
 
-const renderComments = (comments, handler) => {
+const renderComments = (comments, commentsRenderHandler) => {
   commentsContainer.innerHTML = '';
   showComments(comments);
 
-  commentLoader.addEventListener('click', handler);
+  commentLoader.addEventListener('click', commentsRenderHandler);
 };
 
 const activeListeners = new Set();

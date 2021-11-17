@@ -1,12 +1,13 @@
-const smallerImgButton = document.querySelector('.scale__control--smaller');
-const biggerImgButton = document.querySelector('.scale__control--bigger');
-const scaleControlValue = document.querySelector('.scale__control--value');
-const imagePreview = document.querySelector('.img-upload__preview');
 const SCALE_STEP = 0.25;
 const SCALE_MIN = 0.25;
 const SCALE_MAX = 1;
 
-const zoomOutPhoto = () => {
+const smallerImgButton = document.querySelector('.scale__control--smaller');
+const biggerImgButton = document.querySelector('.scale__control--bigger');
+const scaleControlValue = document.querySelector('.scale__control--value');
+const imagePreview = document.querySelector('.img-upload__preview');
+
+const onZoomingOutPhoto = () => {
   const scaleValue = scaleControlValue.value.replace(/[^0-9]/g, '') / 100;
   if (scaleValue !== SCALE_MIN) {
     imagePreview.style.transform = `scale(${scaleValue - SCALE_STEP})`;
@@ -14,7 +15,7 @@ const zoomOutPhoto = () => {
   }
 };
 
-const zoomInPhoto = () => {
+const onZoomingInPhoto = () => {
   const scaleValue = scaleControlValue.value.replace(/[^0-9]/g, '') / 100;
   if (scaleValue !== SCALE_MAX) {
     imagePreview.style.transform = `scale(${scaleValue + SCALE_STEP})`;
@@ -23,8 +24,8 @@ const zoomInPhoto = () => {
 };
 
 const initZoom = () => {
-  smallerImgButton.addEventListener('click', zoomOutPhoto);
-  biggerImgButton.addEventListener('click', zoomInPhoto);
+  smallerImgButton.addEventListener('click', onZoomingOutPhoto);
+  biggerImgButton.addEventListener('click', onZoomingInPhoto);
 };
 
 export {initZoom};
