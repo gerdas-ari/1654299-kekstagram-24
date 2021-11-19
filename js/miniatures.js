@@ -34,11 +34,11 @@ const showComments = (comments) => {
 };
 
 
-const renderComments = (comments, commentsRenderHandler) => {
+const renderComments = (comments, onCommentLoaderClick) => {
   commentsContainer.innerHTML = '';
   showComments(comments);
 
-  commentLoader.addEventListener('click', commentsRenderHandler);
+  commentLoader.addEventListener('click', onCommentLoaderClick);
 };
 
 const activeListeners = new Set();

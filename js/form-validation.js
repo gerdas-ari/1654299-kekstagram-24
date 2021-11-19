@@ -1,5 +1,5 @@
 import { sendData } from './api.js';
-import {onEditFormClose} from './form.js';
+import {onImageEditFormCloseClick} from './form.js';
 import { ESCAPE_CODE } from './utils.js';
 
 // const MAX_COMMENT_LENGTH = 140;
@@ -70,40 +70,40 @@ const checkHashtagValid = () => {
   });
 };
 
-const onErrorMessageSend = (evt) => {
+const onErrorMessageShow = (evt) => {
   if (evt.key !== ESCAPE_CODE && evt.target !== errorButton && evt.target.matches('.error__inner')) {
     return;
   }
   errorSendBlock.remove();
-  errorButton.removeEventListener('click', onErrorMessageSend);
-  document.removeEventListener('keydown', onErrorMessageSend);
+  errorButton.removeEventListener('click', onErrorMessageShow);
+  document.removeEventListener('keydown', onErrorMessageShow);
 };
 
-const onSuccessMessageSend = (evt) => {
+const onSuccessMessageShow = (evt) => {
   if (evt.key !== ESCAPE_CODE && evt.target !== successButton && evt.target.matches('.success__inner')) {
     return;
   }
   successSendBlock.remove();
-  successSendBlock.removeEventListener('click', onSuccessMessageSend);
-  document.removeEventListener('keydown', onSuccessMessageSend);
+  successSendBlock.removeEventListener('click', onSuccessMessageShow);
+  document.removeEventListener('keydown', onSuccessMessageShow);
 };
 
 const openErrorMessage = () => {
   body.append(errorSendBlock);
-  errorButton.addEventListener('click', onErrorMessageSend);
-  document.addEventListener('keydown', onErrorMessageSend);
+  errorButton.addEventListener('click', onErrorMessageShow);
+  document.addEventListener('keydown', onErrorMessageShow);
 };
 const openSuccessMessage = () => {
   body.append(successSendBlock);
-  successSendBlock.addEventListener('click', onSuccessMessageSend);
-  document.addEventListener('keydown', onSuccessMessageSend);
+  successSendBlock.addEventListener('click', onSuccessMessageShow);
+  document.addEventListener('keydown', onSuccessMessageShow);
 };
 
 const onFormSubmit = (evt) => {
   evt.preventDefault();
   commentTextarea.value = commentTextarea.value.replace(/\s+/g, ' ').trim();
   hashtagInput.value = hashtagInput.value.replace(/\s+/g, ' ').trim();
-  sendData(openSuccessMessage, openErrorMessage, new FormData(evt.target), onEditFormClose);
+  sendData(openSuccessMessage, openErrorMessage, new FormData(evt.target), onImageEditFormCloseClick);
 };
 
 export {hashtagInput, commentTextarea, checkHashtagValid, onFormSubmit};
